@@ -2,7 +2,7 @@
 #local:      INE, Lisboa
 #Rversion:   4.3.1
 #criado:     17.07.2023
-#modificado: 18.04.2024
+#modificado: 16.09.2024
 
 # 0. INDEX
 {
@@ -344,7 +344,7 @@ lr_res |>
   scale_x_log10(labels = scales::label_number())
 
 lr_res |> 
-  show_best("roc_auc", n = 5) |> 
+  show_best(metric = "roc_auc", n = 5) |> 
   arrange(penalty)
 
 lr_best <- 

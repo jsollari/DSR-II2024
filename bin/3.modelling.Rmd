@@ -404,7 +404,7 @@ lr_res |>
   scale_x_log10(labels = scales::label_number())
 
 lr_res |> 
-  show_best("roc_auc", n = 5) |> 
+  show_best(metric = "roc_auc", n = 5) |> 
   arrange(penalty)
 
 lr_best <- 
