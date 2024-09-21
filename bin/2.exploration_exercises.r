@@ -4,13 +4,6 @@
 #criado:     05.07.2023
 #modificado: 17.07.2023
 
-library("tidyverse")
-library("nycflights13")
-library("lvplot")
-library("ggbeeswarm")
-library("gridExtra")
-library("hexbin")
-
 # 0. INDEX
 {
 # 1. VARIATION
@@ -182,6 +175,11 @@ flights |>
 }
 # 3. COVARIATION
 {
+library("tidyverse")
+library("lvplot")
+library("gridExtra")
+library("ggbeeswarm")
+
 ## 3.1. CATEGORICAL AND NUMERICAL VARIABLES
 
 # a) Use what you’ve learned to improve the visualization of the departure times
