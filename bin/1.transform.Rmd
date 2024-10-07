@@ -1,7 +1,7 @@
 ---
 title: "1.transform"
 author: "Joao Lopes"
-date: "2024-04-16"
+date: "2024-10-07"
 output:
   pdf_document: default
   html_document: default
@@ -24,8 +24,24 @@ knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 [from https://r4ds.hadley.nz/numbers]
 
 ```{r 1_numerical, warning=FALSE, message=FALSE}
-library("tidyverse")
-library("nycflights13")
+library("nycflights13") #collection of datasets
+library("skimr")        #function skim() for descriptive statistics
+library("tidyverse")    #collection of packages for data analysis
+
+```
+
+```{r 1_0_1_numerical, eval=FALSE}
+#metadata
+?flights
+
+```
+
+```{r 1_0_2_numerical}
+#data inspection
+glimpse(flights)
+
+#descriptive statistics
+skim(flights)
 
 ```
 
@@ -327,7 +343,7 @@ flights |>
 [from https://r4ds.hadley.nz/factors]
 
 ```{r 2_factors, warning=FALSE, message=FALSE}
-library("tidyverse")
+library("tidyverse") #collection of packages for data analysis
 
 ```
 
@@ -526,8 +542,8 @@ gss_cat |>
 [from https://r4ds.hadley.nz/logicals]
 
 ```{r 3_logical, warning=FALSE, message=FALSE}
-library("tidyverse")
-library("nycflights13")
+library("nycflights13") #collection of datasets
+library("tidyverse")    #collection of packages for data analysis
 
 ```
 

@@ -2,7 +2,7 @@
 #local:      INE, Lisboa
 #Rversion:   4.3.1
 #criado:     05.07.2023
-#modificado: 18.04.2024
+#modificado: 03.10.2024
 
 # 0. INDEX
 {
@@ -12,7 +12,7 @@
 # 1.3. GENERAL TRANSFORMATION
 # 1.4 SUMMARY STATISTICS
 # 2. FACTORS
-# 2.1 BASICS
+# 2.1. BASICS
 # 2.2. DATASET gss_cat
 # 2.3. MODIFYING FACTOR ORDER
 # 2.4. MODIFYING FACTOR LEVEL
@@ -26,8 +26,18 @@
 # 1. NUMERIC VECTORS
 {
 #from https://r4ds.hadley.nz/numbers/
-library("tidyverse")
-library("nycflights13")
+library("nycflights13") #collection of datasets
+library("skimr")        #function skim() for descriptive statistics
+library("tidyverse")    #collection of packages for data analysis
+
+#metadata
+?flights
+
+#data inspection
+glimpse(flights)
+
+#descriptive statistics
+skim(flights)
 
 ## 1.1. COUNTS
 
@@ -275,7 +285,7 @@ flights |>
 # 2. FACTORES
 {
 #from https://r4ds.hadley.nz/factors
-library("tidyverse")
+library("tidyverse") #collection of packages for data analysis
 
 # 2.1 BASICS
 
@@ -444,8 +454,8 @@ gss_cat |>
 # 3. LOGICAL VECTORS
 {
 #from https://r4ds.hadley.nz/logicals
-library("tidyverse")
-library("nycflights13")
+library("nycflights13") #collection of datasets
+library("tidyverse")    #collection of packages for data analysis
 
 ## 3.1. COMPARISONS
 

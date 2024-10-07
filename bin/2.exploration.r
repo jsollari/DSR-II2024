@@ -2,7 +2,7 @@
 #local:      INE, Lisboa
 #Rversion:   4.3.1
 #criado:     17.07.2023
-#modificado: 18.04.2024
+#modificado: 03.10.2024
 
 # 0. INDEX
 {
@@ -23,8 +23,18 @@
 # 1. VARIATION
 {
 #from https://r4ds.hadley.nz/eda#variation
-library("tidyverse")
-library("nycflights13")
+library("nycflights13") #collection of datasets
+library("skimr")        #function skim() for descriptive statistics
+library("tidyverse")    #collection of packages for data analysis
+
+#metadata
+?diamonds
+
+#inspect data
+glimpse(diamonds)
+
+#descriptive statistics
+skim(diamonds)
 
 ## 1.1. TYPICAL VALUES
 
@@ -70,6 +80,10 @@ ggplot(diamonds2, aes(x = x, y = y)) +
 ggplot(diamonds2, aes(x = x, y = y)) + 
   geom_point(na.rm = TRUE)
 
+#meaningless missing values
+diamonds |>
+  filter(!between(y, 3, 20))
+
 #meaningful missing values
 flights |> 
   mutate(
@@ -85,8 +99,8 @@ flights |>
 # 2. MISSING VALUES
 {
 #from https://r4ds.hadley.nz/missing-values
-library("tidyverse")
-library("nycflights13")
+library("nycflights13") #collection of datasets
+library("tidyverse")    #collection of packages for data analysis
 
 ## 2.1. EXPLICIT MISSING VALUES
 
@@ -214,8 +228,8 @@ health |>
 # 3. COVARIATION
 {
 #from https://r4ds.hadley.nz/eda#covariation
-library("tidyverse")
-library("hexbin")
+library("hexbin")       #function geom_hex() for data visualization
+library("tidyverse")    #collection of packages for data analysis
 
 ## 3.1. CATEGORICAL AND NUMERICAL VARIABLES
 
@@ -237,6 +251,13 @@ ggplot(diamonds, aes(x = cut, y = price)) +
   
 ## 3.2. TWO CATEGORICAL VARIABLES
 
+#table
+diamonds |> count(color, cut) |>
+  pivot_wider(
+    names_from = "cut",
+    values_from = "n"
+  )
+
 #geom_count()
 ggplot(diamonds, aes(x = cut, y = color)) +
   geom_count()
@@ -244,9 +265,12 @@ ggplot(diamonds, aes(x = cut, y = color)) +
 #geom_tile()  
 diamonds |> 
   count(color, cut) |>
-  ggplot(aes(x = color, y = cut)) +
+  ggplot(aes(x = cut, y = color)) +
   geom_tile(aes(fill = n))
 
+#geom_bar()
+ggplot(diamonds, aes(x = cut, fill = color)) +
+  geom_bar()
 
 ## 3.3. TWO NUMERICAL VARIABLES
 
@@ -277,21 +301,31 @@ ggplot(smaller, aes(x = carat, y = price)) +
 # 4. PATTERNS AND MODELS
 {
 #from https://r4ds.hadley.nz/eda#patterns-and-models
-library("tidyverse")
-library("tidymodels")
+library("tidymodels") #collection of packages for data modelling
+library("tidyverse")  #collection of packages for data analysis
 
-diamonds <- diamonds |>
+set.seed(123)
+diamonds2 <- diamonds |>
   mutate(
     log_price = log(price),
     log_carat = log(carat)
-  )
+  ) |>
+  slice_sample(n = 1000)
+
+diamonds2 |>
+  ggplot(aes(x = log_carat, y = log_price)) +
+  geom_point()
 
 #functions linear_reg() and fit()
 diamonds_fit <- linear_reg() |>
-  fit(log_price ~ log_carat, data = diamonds)
+  fit(log_price ~ log_carat, data = diamonds2)
+
+#function tidy()  
+tidy(diamonds_fit)
+summary(diamonds_fit$fit)$coef
 
 #function augment()
-diamonds_aug <- augment(diamonds_fit, new_data = diamonds) |>
+diamonds_aug <- augment(diamonds_fit, new_data = diamonds2) |>
   mutate(.resid = exp(.resid))
 
 #unexplained variation in price using carat
